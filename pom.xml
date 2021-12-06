@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.learnup.mavenaccount</groupId>
-    <artifactId>MavenPA</artifactId>
+    <artifactId>MavenAccount</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
+            <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -70,7 +70,7 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>100%</minimum>
+                                            <minimum>80%</minimum>
                                         </limit>
                                     </limits>
                                 </rule>

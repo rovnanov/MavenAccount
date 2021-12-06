@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: ru.learnup.mavenaccount.tax.AccountTest
+-------------------------------------------------------------------------------
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.589 s - in ru.learnup.mavenaccount.tax.AccountTest
