@@ -1,6 +1,13 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.mockito.stubbing.Stubber;
 import ru.learnup.mavenaccount.tax.StepBattle;
+import ru.learnup.mavenaccount.tax.StepsManager;
+
+import java.util.List;
+
+import static org.mockito.Mockito.doReturn;
 
 public class BattleTest {
     @Test
@@ -18,4 +25,13 @@ public class BattleTest {
 
         Assertions.assertEquals(expected,actual);
     }
+    @Test
+    public void MockitoWInnerWorksTest(){
+        StepBattle battle = Mockito.mock(StepBattle.class);
+        battle.addSteps(1,1,10);
+        battle.addSteps(1,1,20);
+        int expected = battle.winner();
+        Mockito.verify(battle).winner();
+    }
+
 }

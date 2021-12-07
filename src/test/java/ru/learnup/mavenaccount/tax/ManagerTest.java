@@ -1,9 +1,9 @@
 package ru.learnup.mavenaccount.tax;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
+
+import static org.mockito.Mockito.doReturn;
 
 public class ManagerTest {
 
@@ -28,5 +28,10 @@ public class ManagerTest {
         int expected = 21;
         int actual = manager.getMaxStep();
         Assertions.assertEquals(expected, actual);
+    }
+    @Test
+    public void mockGetStepsTest(){
+        StepsManager manager = new StepsManager();
+        doReturn(List.of(10,10,10)).when(manager).getSteps();
     }
 }

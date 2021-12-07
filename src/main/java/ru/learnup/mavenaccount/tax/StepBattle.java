@@ -3,7 +3,6 @@ import java.util.HashMap;
 public class StepBattle {
     private HashMap<Integer, Integer> stepCounter = new HashMap<>();
     private HashMap<Integer, Integer> stepCounter2 = new HashMap<>();
-    private int player;
 
     public void addSteps(int player, int day, int steps) {
         if (player == 1) {
