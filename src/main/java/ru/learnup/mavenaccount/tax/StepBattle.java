@@ -2,7 +2,6 @@ package ru.learnup.mavenaccount.tax;
 import java.util.HashMap;
 public class StepBattle extends StepsManager {
 
-
     public void addSteps(int player, int day, int steps) {
         if (player == 1) {
             if (stepCounter.containsKey(day)) {
