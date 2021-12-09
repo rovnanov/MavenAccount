@@ -27,6 +27,7 @@ public class BattleTest {
     }
     @Test
     public void MockitoWInnerWorksTest(){
+        StepsManager manager = Mockito.mock(StepsManager.class);
         StepBattle battle = Mockito.mock(StepBattle.class);
         battle.addSteps(1,1,10);
         battle.addSteps(1,1,20);

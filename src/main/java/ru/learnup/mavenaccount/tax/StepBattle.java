@@ -1,8 +1,7 @@
 package ru.learnup.mavenaccount.tax;
 import java.util.HashMap;
-public class StepBattle {
-    private HashMap<Integer, Integer> stepCounter = new HashMap<>();
-    private HashMap<Integer, Integer> stepCounter2 = new HashMap<>();
+public class StepBattle extends StepsManager {
+
 
     public void addSteps(int player, int day, int steps) {
         if (player == 1) {

@@ -29,9 +29,4 @@ public class ManagerTest {
         int actual = manager.getMaxStep();
         Assertions.assertEquals(expected, actual);
     }
-    @Test
-    public void mockGetStepsTest(){
-        StepsManager manager = new StepsManager();
-        doReturn(List.of(10,10,10)).when(manager).getSteps();
-    }
 }

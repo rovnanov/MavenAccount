@@ -6,33 +6,35 @@ import java.util.List;
 import java.util.Map;
 
 public class StepsManager {
-    private HashMap<Integer, Integer> stat = new HashMap<>();
+    protected HashMap<Integer, Integer> stepCounter = new HashMap<>();
+    protected HashMap<Integer, Integer> stepCounter2 = new HashMap<>();
 
     public void addSteps(int day, int steps) {
-        if (stat.containsKey(day)) {
-            stat.put(day, stat.get(day) + steps);
+        if (stepCounter.containsKey(day)) {
+            stepCounter.put(day, stepCounter.get(day) + steps);
         } else {
-            stat.put(day, steps);
+            stepCounter.put(day, steps);
         }
     }
 
     public int getMaxStep() {
         int result = 0;
-        for(int day : stat.keySet()){
-            if(stat.get(day) > result){
-                result += stat.get(day);
+        for (int day : stepCounter.keySet()) {
+            if (stepCounter.get(day) > result) {
+                result += stepCounter.get(day);
             }
         }
         return result + 1;
     }
 
     public void print() {
-        System.out.println(stat);
+        System.out.println(stepCounter);
     }
-    public List<Integer> getSteps(){
+
+    public List<Integer> getSteps() {
         List<Integer> results = new ArrayList<>();
-        for (int day : stat.keySet()){
-            results.add(stat.get(day));
+        for (int day : stepCounter.keySet()) {
+            results.add(stepCounter.get(day));
         }
         return results;
     }
