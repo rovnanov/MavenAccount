@@ -1,9 +1,12 @@
 package ru.learnup.mavenaccount.tax;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class StepsManager {
     protected HashMap<Integer, Integer> stepCounter = new HashMap<>();
@@ -37,6 +40,10 @@ public class StepsManager {
             results.add(stepCounter.get(day));
         }
         return results;
+    }
+    public Stream<Integer> getAllAbove(int steps){
+        return stepCounter.keySet().stream()
+                .filter(i -> i > steps);
     }
 }
 
