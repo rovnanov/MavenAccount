@@ -29,4 +29,32 @@ public class ManagerTest {
         int actual = manager.getMaxStep();
         Assertions.assertEquals(expected, actual);
     }
+    @Test
+    public void stepsExceptionTest(){
+        StepsManager manager = new StepsManager();
+
+        try {
+            manager.addSteps(1,-1);
+            Assertions.fail("Метод должен был умереть с исключением");
+        } catch (IllegalStepsException e) {
+        } catch (Exception e) {
+            Assertions.fail("Метод умер не с тем видом исключения: " + e.getClass());
+        }
+    }
+    @Test
+    public void dayExceptionTest(){
+        StepsManager manager = new StepsManager();
+
+        Assertions.assertThrows(IllegalDayException.class, () -> {
+            manager.addSteps(0,10);
+        });
+    }
+    @Test
+    public void dayExceptionTest2(){
+        StepsManager manager = new StepsManager();
+
+        Assertions.assertThrows(IllegalDayException.class,  () -> {
+            manager.addSteps(400,5);
+        });
+    }
 }
