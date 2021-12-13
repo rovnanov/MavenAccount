@@ -45,4 +45,23 @@ public class DbHelper {
             return null;
         }
     }
+    public int getDay(Post post) {
+        try {
+            int result = -1;
+            final Statement statement = connection.createStatement();
+            final ResultSet resultSet = statement.executeQuery(
+                    "SELECT * FROM manager;"
+            );
+            while (resultSet.next()) {
+                if (resultSet.getInt("day") == post.getDay()) {
+                    result = resultSet.getInt("steps");
+                    break;
+                }
+            }
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }

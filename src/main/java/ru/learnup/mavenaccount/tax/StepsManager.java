@@ -6,9 +6,6 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class StepsManager {
-    protected HashMap<Integer, Integer> stepCounter = new HashMap<>();
-    protected HashMap<Integer, Integer> stepCounter2 = new HashMap<>();
-
     private static final String url = "jdbc:postgresql://localhost:5432/postgres";
     private static final String user = "postgres";
     private static final String pass = "postgres";
@@ -38,7 +35,7 @@ public class StepsManager {
             System.out.println(post);
         }
     }
-    public void addSteps(int day, int steps) {
+    public static void addSteps(int day, int steps) {
         if (steps < 0) {
             throw new IllegalStepsException("Количество шагов не должно быть отрицательным значением: " + steps);
         }
@@ -48,33 +45,17 @@ public class StepsManager {
         if (day > 365) {
             throw new IllegalDayException("Количество дней не может быть больше 365: " + day);
         }
-        if (stepCounter.containsKey(day)) {
-            stepCounter.put(day, stepCounter.get(day) + steps);
-        } else {
-            stepCounter.put(day, steps);
-        }
+        helper.addPost(
+                new Post(day,steps));
     }
-
-    public int getMaxStep() {
-        int result = 0;
-        for (int day : stepCounter.keySet()) {
-            if (stepCounter.get(day) > result) {
-                result += stepCounter.get(day);
-            }
+    public static int getSteps(int day){
+        if (day < 1) {
+            throw new IllegalDayException("Значение дня не может быть равно нулю или быть отрицательным: " + day);
         }
-        return result + 1;
-    }
-
-    public void print() {
-        System.out.println(stepCounter);
-    }
-
-    public List<Integer> getSteps() {
-        List<Integer> results = new ArrayList<>();
-        for (int day : stepCounter.keySet()) {
-            results.add(stepCounter.get(day));
+        if (day > 365) {
+            throw new IllegalDayException("Значения дня не может быть больше 365: " + day);
         }
-        return results;
+        return helper.getDay(new Post(day, 0));
     }
 }
 
