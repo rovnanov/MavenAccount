@@ -1,9 +1,20 @@
-package ru.learnup.mavenaccount.tax;
+package ru.learnup.mavenaccount.tax.entities;
 
+import javax.persistence.*;
+@Entity
+@Table(name = "manager")
 public class Post {
-
+    @Id
     private Integer day;
+    @Column
     private Integer steps;
+
+    public Post() {
+    }
+
+    public Post(Integer steps) {
+        this.steps = steps;
+    }
 
     public Post(Integer day, Integer steps) {
         this.day = day;
@@ -28,7 +39,6 @@ public class Post {
 
     @Override
     public String toString() {
-        return day + " day - " +
-                steps + " steps";
+        return day + " day - " + steps + " steps";
     }
 }

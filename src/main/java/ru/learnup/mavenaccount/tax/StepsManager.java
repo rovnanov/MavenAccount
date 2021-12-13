@@ -1,9 +1,7 @@
 package ru.learnup.mavenaccount.tax;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import ru.learnup.mavenaccount.tax.entities.Post;
+
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class StepsManager {
     private static final String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -15,7 +13,7 @@ public class StepsManager {
     public static void main(String[] args) {
         try {
             Class.forName("org.postgresql.Driver");
-            addPostAndPrintAll();
+            printAllPosts();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -47,15 +45,6 @@ public class StepsManager {
         }
         helper.addPost(
                 new Post(day,steps));
-    }
-    public static int getSteps(int day){
-        if (day < 1) {
-            throw new IllegalDayException("Значение дня не может быть равно нулю или быть отрицательным: " + day);
-        }
-        if (day > 365) {
-            throw new IllegalDayException("Значения дня не может быть больше 365: " + day);
-        }
-        return helper.getDay(new Post(day, 0));
     }
 }
 

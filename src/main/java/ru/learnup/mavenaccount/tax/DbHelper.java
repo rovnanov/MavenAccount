@@ -1,67 +1,49 @@
 package ru.learnup.mavenaccount.tax;
-import java.sql.*;
-import java.util.ArrayList;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.learnup.mavenaccount.tax.entities.Post;
+
 import java.util.List;
 
 public class DbHelper {
 
-    private Connection connection;
+    private final SessionFactory sessionFactory;
 
     public DbHelper(String url, String user, String pass) {
-        try {
-            this.connection = DriverManager.getConnection(url, user, pass);
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
-    }
-    public void addPost(Post post){
-        try {
-            List<Post> result = new ArrayList<>();
-            final PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO manager(day, steps) VALUES (?, ?);");
-            statement.setInt(1,post.getDay());
-            statement.setInt(2,post.getSteps());
-            statement.executeQuery();
-        } catch (SQLException err) {
-            err.printStackTrace();
-        }
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        final Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+        this.sessionFactory = metadata.getSessionFactoryBuilder().build();
     }
 
     public List<Post> getAllPosts() {
-        try {
-            List<Post> result = new ArrayList<>();
-            final Statement statement = (Statement) connection.createStatement();
-            final ResultSet resultSet = statement.executeQuery(
-                    "SELECT * FROM manager ORDER by day ASC;");
-            while (resultSet.next()) {
-                final int day = resultSet.getInt("day");
-                final int steps = resultSet.getInt("steps");
-                result.add(
-                        new Post(day, steps));
-            }
-            return result;
-        } catch (SQLException err) {
-            err.printStackTrace();
-            return null;
+        try(Session session = sessionFactory.openSession()){
+            final Query<Post> result = session.createQuery("from Post order by day asc", Post.class);
+            return result.getResultList();
         }
     }
-    public int getDay(Post post) {
-        try {
-            int result = -1;
-            final Statement statement = connection.createStatement();
-            final ResultSet resultSet = statement.executeQuery(
-                    "SELECT * FROM manager;"
-            );
-            while (resultSet.next()) {
-                if (resultSet.getInt("day") == post.getDay()) {
-                    result = resultSet.getInt("steps");
-                    break;
-                }
-            }
-            return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
+    public void addPost(Post post) {
+        int id = getIdent();
+        post.setDay(++id);
+        try(Session session = sessionFactory.openSession()){
+            final Transaction transaction = session.beginTransaction();
+            session.save(post);
+            transaction.commit();
         }
+    }
+    private int getIdent(){
+        int num = 0;
+        for (Post day : getAllPosts()){
+            if (day.getDay() > num){
+                num = day.getDay();
+            }
+        }
+        return num;
     }
 }
