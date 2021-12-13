@@ -2,12 +2,42 @@ package ru.learnup.mavenaccount.tax;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class StepsManager {
     protected HashMap<Integer, Integer> stepCounter = new HashMap<>();
     protected HashMap<Integer, Integer> stepCounter2 = new HashMap<>();
 
+    private static final String url = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String user = "postgres";
+    private static final String pass = "postgres";
+    private static DbHelper helper = new DbHelper(url, user, pass);
+
+
+    public static void main(String[] args) {
+        try {
+            Class.forName("org.postgresql.Driver");
+            addPostAndPrintAll();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void addPostAndPrintAll(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите день");
+        final int day = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите кол-во шагов");
+        final int steps = Integer.parseInt(scanner.nextLine());
+        helper.addPost(
+                new Post(day,steps));
+        printAllPosts();
+    }
+    public static void printAllPosts(){
+        for (Post post : helper.getAllPosts()){
+            System.out.println(post);
+        }
+    }
     public void addSteps(int day, int steps) {
         if (steps < 0) {
             throw new IllegalStepsException("Количество шагов не должно быть отрицательным значением: " + steps);
@@ -45,11 +75,6 @@ public class StepsManager {
             results.add(stepCounter.get(day));
         }
         return results;
-    }
-
-    public Stream<Integer> getAllAbove(int steps) {
-        return stepCounter.keySet().stream()
-                .filter(i -> i > steps);
     }
 }
 
