@@ -2,20 +2,20 @@ package ru.learnup.mavenaccount.tax;
 import java.util.HashMap;
 public class StepBattle extends StepsManager {
 
-
+    private StepsManager manager1;
+    private StepsManager manager2;
+    public StepBattle(StepsManager manager1, StepsManager manager2){
+        this.manager1 = manager1;
+        this.manager2 = manager2;
+    }
     public void addSteps(int player, int day, int steps) {
+        if (player != 1 && player != 2){
+            return;
+        }
         if (player == 1) {
-            if (stepCounter.containsKey(day)) {
-                stepCounter.put(day, stepCounter.get(day) + steps);
-            } else {
-                stepCounter.put(day, steps);
-            }
+            manager1.add(day,steps);
         } else {
-            if (stepCounter2.containsKey(day)) {
-                stepCounter2.put(day, stepCounter2.get(day) + steps);
-            } else {
-                stepCounter2.put(day, steps);
-            }
+            manager2.add(day,steps);
         }
     }
 
@@ -23,11 +23,11 @@ public class StepBattle extends StepsManager {
         int tmpSteps = 0;
         int tmpSteps2 = 0;
         int result;
-        for (int day : stepCounter.keySet()) {
-            tmpSteps += stepCounter.get(day);
+        for (int day : manager1.stat.keySet()) {
+            tmpSteps += manager1.stat.get(day);
         }
-        for (int day : stepCounter2.keySet()) {
-            tmpSteps2 += stepCounter2.get(day);
+        for (int day : manager2.stat.keySet()) {
+            tmpSteps2 += manager2.stat.get(day);
         }
         if (tmpSteps > tmpSteps2) {
             result = 1;
