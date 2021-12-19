@@ -8,22 +8,16 @@ import java.util.Map;
 public class StepsManager {
     private HashMap<Integer, Integer> stat = new HashMap<>();
 
-    public void addSteps(int day, int steps) {
+    public int addSteps(int day, int steps) {
+        int newMax;
         if (stat.containsKey(day)) {
             stat.put(day, stat.get(day) + steps);
+
         } else {
             stat.put(day, steps);
         }
-    }
-
-    public int getMaxStep() {
-        int result = 0;
-        for(int day : stat.keySet()){
-            if(stat.get(day) > result){
-                result += stat.get(day);
-            }
-        }
-        return result + 1;
+        newMax = stat.get(day) + 1;
+        return newMax;
     }
 
     public void print() {
